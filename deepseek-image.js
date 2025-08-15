@@ -283,9 +283,26 @@ document.getElementById('image-form').addEventListener('submit', async function 
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 });
+document.getElementById("uploadMenuBtn")?.addEventListener("click", function () {
+  const menu = document.getElementById("uploadMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+document.getElementById("uploadImageOption")?.addEventListener("click", function () {
+  document.getElementById("imageUpload").click();
+  document.getElementById("uploadMenu").style.display = "none";
+});
+
+document.addEventListener("click", function (event) {
+  if (!event.target.closest(".upload-menu-container")) {
+    document.getElementById("uploadMenu").style.display = "none";
+  }
+});
+
 
 window.onload = () => {
   loadFromLocalStorage();
   renderImages();
 };
+
 
