@@ -207,7 +207,7 @@ document.getElementById('image-form').addEventListener('submit', async function 
       formData.append("prompt", prompt);
       formData.append("image", uploadedImageFile);
 
-      const response = await fetch("https://api.example.com/process-image", {
+      const response = await fetch("https://api.together.xyz/v1/images/generations", {
         method: "POST",
         body: formData
       });
@@ -288,3 +288,4 @@ window.onload = () => {
   loadFromLocalStorage();
   renderImages();
 };
+
