@@ -154,7 +154,7 @@ document.getElementById('image-form').addEventListener('submit', async function 
     const response = await fetch("https://api.together.xyz/v1/images/generations ", {
       method: "POST",
       headers: {
-        "Authorization": "Bearer tgp_v1_G1pfjhNvjm33bZyBkjG7dikaba658FK5MXH8cF2vu7M",
+        "Authorization": "Bearer 010df7c2314896b461b31f9a30792d82a63007b5b73ff787f83ec12aae6a700d",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
@@ -208,4 +208,5 @@ window.onload = () => {
   loadFromLocalStorage();
   renderImages();
 };
+
 
