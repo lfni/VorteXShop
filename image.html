@@ -36,11 +36,19 @@
       <div id="image-chat-box"></div>
 
       <!-- Input Form -->
-      <form id="image-form">
-        <input type="file" id="imageUpload" accept="image/*" />
-        <input type="text" id="promptInput" placeholder="توضیح تصویرت رو بنویس..." autocomplete="off" />
-        <button type="submit">⏎</button>
-      </form>
+      <!-- Input Form -->
+<form id="image-form" enctype="multipart/form-data">
+  <div class="upload-menu-container">
+    <button type="button" id="uploadMenuBtn" class="upload-btn">+</button>
+    <div class="upload-menu" id="uploadMenu">
+      <button type="button" id="uploadImageOption">📷 آپلود عکس</button>
+    </div>
+  </div>
+  <input type="file" id="imageUpload" accept="image/*" style="display:none" />
+  <input type="text" id="promptInput" placeholder="توضیح تصویرت رو بنویس..." autocomplete="off" />
+  <button type="submit">⏎</button>
+</form>
+
 
     </main>
 
@@ -54,5 +62,6 @@
 </body>
 
 </html>
+
 
 
