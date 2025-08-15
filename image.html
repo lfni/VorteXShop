@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <title>VorteX | Image Pro</title>
-  <link rel="stylesheet" href="chat.css" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="deepseek-image-style.css" />
 </head>
 <body>
@@ -14,8 +14,8 @@
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="logo">
-        <img src="parsi.png" alt="Logo" />
-        <h2>VorteX</h2>
+        <img src="parsi.png" alt="Logo" style="border-radius: 10px;"/>
+        <h2>VorteX | Image Herfei</h2>
         <a href="chat.html" class="new-image-btn">برگشت -></a>
       </div>
 
@@ -36,19 +36,10 @@
       <div id="image-chat-box"></div>
 
       <!-- Input Form -->
-      <!-- Input Form -->
-<form id="image-form" enctype="multipart/form-data">
-<div class="upload-menu-container">
-  <button type="button" id="uploadMenuBtn" class="upload-btn">+</button>
-  <div class="upload-popup" id="uploadMenu">
-    <button type="button" id="uploadImageOption" class="upload-image-btn">📷 آپلود عکس</button>
-  </div>
-</div>
-<input type="file" id="imageUpload" accept="image/*" style="display:none" />
-  <input type="text" id="promptInput" placeholder="توضیح تصویرت رو بنویس..." autocomplete="off" />
-  <button type="submit">⏎</button>
-</form>
-
+      <form id="image-form">
+        <input type="text" id="promptInput" placeholder="توضیح تصویرت رو بنویس..." autocomplete="off" />
+        <button type="submit">⏎</button>
+      </form>
 
     </main>
 
@@ -60,9 +51,4 @@
   <!-- Script -->
   <script src="deepseek-image.js"></script>
 </body>
-
 </html>
-
-
-
-
