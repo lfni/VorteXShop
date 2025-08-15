@@ -418,8 +418,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function getAIResponse(message, precise = false) {
         // اینجا باید آدرس API واقعی و کلید API خود را قرار دهید
-        const API_URL = 'https://api.gapapi.com/v1';
-        const API_KEY = 'sk-3jOHwUslaY8Io0v68k4ZFCfQCe3xyMcdihOarWf11pmssPOZ';
+        const API_URL = 'https://api.together.xyz/v1/chat/completions';
+        const API_KEY = 'tgp_v1_G1pfjhNvjm33bZyBkjG7dikaba658FK5MXH8cF2vu7M';
         
         try {
             const response = await fetch(API_URL, {
@@ -459,4 +459,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
