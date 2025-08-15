@@ -118,64 +118,14 @@ function selectImage(imageId) {
   renderImages();
 }
 
-// ==================== قابلیت آپلود و پیش‌نمایش عکس ====================
-let uploadedImageFile = null;
-
-document.getElementById("imageUpload")?.addEventListener("change", function (e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  if (!file.type.startsWith("image/")) {
-    alert("فقط می‌توانید عکس آپلود کنید.");
-    e.target.value = "";
-    return;
-  }
-
-  uploadedImageFile = file;
-
-  // نمایش پیش‌نمایش در چت
-  const chatBox = document.getElementById("image-chat-box");
-  const previewDiv = document.createElement("div");
-  previewDiv.className = "image-message image-output";
-
-  const img = document.createElement("img");
-  img.src = URL.createObjectURL(file);
-  img.style.maxWidth = "150px";
-  img.style.borderRadius = "10px";
-
-  previewDiv.appendChild(img);
-  chatBox.appendChild(previewDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
-});
-
-// ==================== منوی بازشو برای دکمه + ====================
-document.getElementById("uploadMenuBtn")?.addEventListener("click", function () {
-  const menu = document.getElementById("uploadMenu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-});
-
-document.getElementById("uploadImageOption")?.addEventListener("click", function () {
-  document.getElementById("imageUpload").click();
-  document.getElementById("uploadMenu").style.display = "none";
-});
-
-document.addEventListener("click", function (event) {
-  if (!event.target.closest(".upload-menu-container")) {
-    const menu = document.getElementById("uploadMenu");
-    if (menu) menu.style.display = "none";
-  }
-});
-// ======================================================================
-
 document.getElementById('image-form').addEventListener('submit', async function (e) {
   e.preventDefault();
   const input = document.getElementById("promptInput");
   const chatBox = document.getElementById("image-chat-box");
   const prompt = input.value.trim();
+  if (!prompt) return;
 
-  if (!prompt && !uploadedImageFile) return;
-
-  // محدودیت روزانه
+  // محدودیت ۲ تصویر در روز
   const count = getImageCountToday();
   if (count >= DAILY_IMAGE_LIMIT) {
     const warning = document.createElement("div");
@@ -190,88 +140,57 @@ document.getElementById('image-form').addEventListener('submit', async function 
   if (!currentImageId) createNewImage(prompt.substring(0, 20));
   const currentImage = images.find(i => i.id === currentImageId);
 
-  if (prompt) {
-    currentImage.prompt = prompt;
-    const promptDiv = document.createElement("div");
-    promptDiv.className = "image-message prompt";
-    promptDiv.textContent = prompt;
-    chatBox.appendChild(promptDiv);
-  }
+  currentImage.prompt = prompt;
+
+  const promptDiv = document.createElement("div");
+  promptDiv.className = "image-message prompt";
+  promptDiv.textContent = prompt;
+  chatBox.appendChild(promptDiv);
 
   input.value = "";
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-    if (uploadedImageFile) {
-      const formData = new FormData();
-      formData.append("prompt", prompt);
-      formData.append("image", uploadedImageFile);
+    const response = await fetch("https://api.together.xyz/v1/images/generations ", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer tgp_v1_G1pfjhNvjm33bZyBkjG7dikaba658FK5MXH8cF2vu7M",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        prompt: prompt,
+        model: "black-forest-labs/FLUX.1-dev",
+        n: 1,
+        size: "355x355"
+      })
+    });
 
-      const response = await fetch("https://api.together.xyz/v1/images/generations", {
-        method: "POST",
-        body: formData
-      });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error?.message || "خطا در تولید تصویر");
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "خطا در پردازش تصویر");
+    let imageUrl = data.data?.[0]?.url || data.choices?.[0]?.image_url || data.output?.url || data.image_url || data.images?.[0];
+    if (!imageUrl) throw new Error("❌ API تصویری تولید نکرد.");
 
-      if (data.imageUrl) {
-        currentImage.imageUrl = data.imageUrl;
-        const imageDiv = document.createElement("div");
-        imageDiv.className = "image-message image-output";
+    currentImage.imageUrl = imageUrl;
 
-        const img = document.createElement("img");
-        img.src = data.imageUrl;
-        img.style.maxWidth = "100%";
-        img.style.borderRadius = "10px";
+    const imageDiv = document.createElement("div");
+    imageDiv.className = "image-message image-output";
 
-        imageDiv.appendChild(img);
-        chatBox.appendChild(imageDiv);
-      }
+    const img = document.createElement("img");
+    img.src = imageUrl;
 
-      uploadedImageFile = null;
-    } else {
-      const response = await fetch("https://api.together.xyz/v1/images/generations", {
-        method: "POST",
-        headers: {
-          "Authorization": "Bearer tgp_v1_G1pfjhNvjm33bZyBkjG7dikaba658FK5MXH8cF2vu7M",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          prompt: prompt,
-          model: "black-forest-labs/FLUX.1-dev",
-          n: 1,
-          size: "355x355"
-        })
-      });
+    const downloadLink = document.createElement("a");
+    downloadLink.href = imageUrl;
+    downloadLink.download = "ai-image.png";
+    downloadLink.textContent = "📥 دانلود";
+    downloadLink.className = "download-btn";
+    downloadLink.target = "_blank";
 
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error?.message || "خطا در تولید تصویر");
-
-      let imageUrl = data.data?.[0]?.url || data.choices?.[0]?.image_url || data.output?.url || data.image_url || data.images?.[0];
-      if (!imageUrl) throw new Error("❌ API تصویری تولید نکرد.");
-
-      currentImage.imageUrl = imageUrl;
-
-      const imageDiv = document.createElement("div");
-      imageDiv.className = "image-message image-output";
-
-      const img = document.createElement("img");
-      img.src = imageUrl;
-
-      const downloadLink = document.createElement("a");
-      downloadLink.href = imageUrl;
-      downloadLink.download = "ai-image.png";
-      downloadLink.textContent = "📥 دانلود";
-      downloadLink.className = "download-btn";
-      downloadLink.target = "_blank";
-
-      imageDiv.appendChild(img);
-      imageDiv.appendChild(downloadLink);
-      chatBox.appendChild(imageDiv);
-    }
-
+    imageDiv.appendChild(img);
+    imageDiv.appendChild(downloadLink);
+    chatBox.appendChild(imageDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
+
     incrementImageCount();
     saveToLocalStorage();
     renderImages();
@@ -283,26 +202,8 @@ document.getElementById('image-form').addEventListener('submit', async function 
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 });
-document.getElementById("uploadMenuBtn")?.addEventListener("click", function () {
-  const menu = document.getElementById("uploadMenu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-});
-
-document.getElementById("uploadImageOption")?.addEventListener("click", function () {
-  document.getElementById("imageUpload").click();
-  document.getElementById("uploadMenu").style.display = "none";
-});
-
-document.addEventListener("click", function (event) {
-  if (!event.target.closest(".upload-menu-container")) {
-    document.getElementById("uploadMenu").style.display = "none";
-  }
-});
-
 
 window.onload = () => {
   loadFromLocalStorage();
   renderImages();
 };
-
-
