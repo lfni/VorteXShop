@@ -269,8 +269,28 @@ document.getElementById('image-form').addEventListener('submit', async function 
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 });
+// باز و بسته شدن منو
+document.getElementById("uploadMenuBtn")?.addEventListener("click", function () {
+  const menu = document.getElementById("uploadMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+// کلیک روی گزینه آپلود عکس
+document.getElementById("uploadImageOption")?.addEventListener("click", function () {
+  document.getElementById("imageUpload").click();
+  document.getElementById("uploadMenu").style.display = "none";
+});
+
+// وقتی بیرون منو کلیک شد، بسته بشه
+document.addEventListener("click", function (event) {
+  if (!event.target.closest(".upload-menu-container")) {
+    document.getElementById("uploadMenu").style.display = "none";
+  }
+});
+
 
 window.onload = () => {
   loadFromLocalStorage();
   renderImages();
 };
+
