@@ -211,4 +211,46 @@ body, html {
 
 #image-form button:hover {
   background-color: #e67fb2;
+
+  .upload-menu-container {
+  position: relative;
+  display: inline-block;
+}
+
+.upload-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.upload-menu {
+  display: none;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 5px;
+  z-index: 10;
+}
+
+.upload-menu button {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+}
+
+.upload-menu button:hover {
+  background-color: #f0f0f0;
+}
+
 }
