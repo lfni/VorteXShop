@@ -119,7 +119,6 @@ function selectImage(imageId) {
 }
 
 // ==================== قابلیت آپلود و پیش‌نمایش عکس ====================
-
 let uploadedImageFile = null;
 
 document.getElementById("imageUpload")?.addEventListener("change", function (e) {
@@ -149,6 +148,23 @@ document.getElementById("imageUpload")?.addEventListener("change", function (e) 
   chatBox.scrollTop = chatBox.scrollHeight;
 });
 
+// ==================== منوی بازشو برای دکمه + ====================
+document.getElementById("uploadMenuBtn")?.addEventListener("click", function () {
+  const menu = document.getElementById("uploadMenu");
+  menu.style.display = menu.style.display === "block" ? "none" : "block";
+});
+
+document.getElementById("uploadImageOption")?.addEventListener("click", function () {
+  document.getElementById("imageUpload").click();
+  document.getElementById("uploadMenu").style.display = "none";
+});
+
+document.addEventListener("click", function (event) {
+  if (!event.target.closest(".upload-menu-container")) {
+    const menu = document.getElementById("uploadMenu");
+    if (menu) menu.style.display = "none";
+  }
+});
 // ======================================================================
 
 document.getElementById('image-form').addEventListener('submit', async function (e) {
@@ -186,7 +202,6 @@ document.getElementById('image-form').addEventListener('submit', async function 
   chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-    // اگر فایل آپلود شده داریم، با FormData به API بفرست
     if (uploadedImageFile) {
       const formData = new FormData();
       formData.append("prompt", prompt);
@@ -216,7 +231,6 @@ document.getElementById('image-form').addEventListener('submit', async function 
 
       uploadedImageFile = null;
     } else {
-      // اگر آپلود نداشتیم، از API تولید تصویر استفاده کن
       const response = await fetch("https://api.together.xyz/v1/images/generations", {
         method: "POST",
         headers: {
@@ -269,28 +283,8 @@ document.getElementById('image-form').addEventListener('submit', async function 
     chatBox.scrollTop = chatBox.scrollHeight;
   }
 });
-// باز و بسته شدن منو
-document.getElementById("uploadMenuBtn")?.addEventListener("click", function () {
-  const menu = document.getElementById("uploadMenu");
-  menu.style.display = menu.style.display === "block" ? "none" : "block";
-});
-
-// کلیک روی گزینه آپلود عکس
-document.getElementById("uploadImageOption")?.addEventListener("click", function () {
-  document.getElementById("imageUpload").click();
-  document.getElementById("uploadMenu").style.display = "none";
-});
-
-// وقتی بیرون منو کلیک شد، بسته بشه
-document.addEventListener("click", function (event) {
-  if (!event.target.closest(".upload-menu-container")) {
-    document.getElementById("uploadMenu").style.display = "none";
-  }
-});
-
 
 window.onload = () => {
   loadFromLocalStorage();
   renderImages();
 };
-
