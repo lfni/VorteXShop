@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>ParsiChat | Image Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="deepseek-image-style.css" />
+</head>
+<body>
+
+  <!-- Container -->
+  <div class="app" id="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="logo">
+        <img src="assets/parsi.png" alt="Logo" />
+        <h2>ParsiChat | Image Herfei</h2>
+        <a href="chat.html" class="new-image-btn">برگشت -></a>
+      </div>
+
+      <!-- منوی تصاویر -->
+      <nav class="menu">
+        <a href="#" class="new-image-btn" onclick="createNewImage()">+ تصویر جدید</a>
+        <div id="images-list"></div>
+      </nav>
+
+      <!-- دکمه Toggle -->
+      <button class="toggle-btn" id="toggleBtn" onclick="toggleSidebar()">☰</button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="chat-main">
+      
+      <!-- Chat Box برای نمایش تصاویر و پرامپت‌ها -->
+      <div id="image-chat-box"></div>
+
+      <!-- Input Form -->
+      <form id="image-form">
+        <input type="text" id="promptInput" placeholder="توضیح تصویرت رو بنویس..." autocomplete="off" />
+        <button type="submit">⏎</button>
+      </form>
+
+    </main>
+
+    <!-- Mini Button for Open Sidebar -->
+    <button class="mini-toggle-btn" id="miniToggleBtn" onclick="openSidebar()">▶</button>
+
+  </div>
+
+  <!-- Script -->
+  <script src="deepseek-image.js"></script>
+</body>
+</html>

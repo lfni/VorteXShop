@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VorTex AI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* استایل‌های موقت تا زمانی که فایل CSS بارگذاری شود */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Vazirmatn', sans-serif;
+        }
+        .app-container {
+            display: flex;
+            height: 100vh;
+        }
+    </style>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- اسلایدبار ثابت -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button id="new-chat" class="sidebar-button">
+                    <i class="fas fa-plus"></i> گفتگوی جدید
+                </button>
+                <a href="image.html" class="sidebar-button" style="display: none;">ساخت تصویر</a>
+            </div>
+            
+            <div class="chat-list" id="chat-list">
+                <!-- لیست چت‌ها اینجا نمایش داده می‌شود -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <button id="theme-toggle">
+                    <i class="fas fa-moon"></i> تغییر تم
+                </button>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="app-header">
+                <button id="settings-button" class="settings-button">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <h1><i class="fas fa-robot"></i>VorteX AI </h1>
+                <div class="header-pattern"></div>
+                
+                <!-- پنل تنظیمات -->
+                <div class="settings-panel" id="settings-panel">
+                    <div class="settings-content">
+                        <h2 class="nastaliq-font">درباره VorteX AI</h2>
+                        <p class="nastaliq-font">
+                            هوش مصنوعی ورتکس هوش مصنوعی برگرفته شده از چت جی پی تی هست که قابلیت جستجو در گوگل و خواندن فایل هایی که شما میزارید و کلی قابلیت های دیگه که شما بعدا متوجه اون ها میشید.
+                        </p>
+                        <button id="close-settings" class="nastaliq-font">بستن</button>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="chat-container">
+                <div class="chat-history" id="chat-history">
+                    <!-- پیام‌ها اینجا نمایش داده می‌شوند -->
+                </div>
+                
+                <div class="input-area">
+                    <div style="color: rgb(255, 246, 246); background-color: rgb(31, 31, 31);" class="input-container">
+                        <textarea style="color: rgb(255, 246, 246); background-color: rgb(31, 31, 31);" id="user-input" placeholder="پیام خود را بنویسید..." rows="1"></textarea>
+                        <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                    <div class="disclaimer">
+                        <p>هوش مصنوعی ورتکس ممکن است اطلاعات نادرست تولید کند. لطفاً اطلاعات حساس را وارد نکنید.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- پنل تأیید حذف -->
+        <div class="confirm-panel" id="confirm-panel">
+            <div class="confirm-content">
+                <h3 class="nastaliq-font">حذف گفتگو</h3>
+                <p class="nastaliq-font">آیا از حذف این گفتگو مطمئن هستید؟</p>
+                <div class="confirm-buttons">
+                    <button id="confirm-delete" class="delete-btn nastaliq-font">حذف</button>
+                    <button id="cancel-delete" class="cancel-btn nastaliq-font">انصراف</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>
